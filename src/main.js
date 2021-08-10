@@ -8,8 +8,10 @@ import {createSortTemplate} from './view/sort';
 import {createTripInfoTemplate} from './view/trip-info';
 import {createTripInfoMainTemplate} from './view/trip-info-main';
 import {createTripInfoCostTemplate} from './view/trip-info-cost';
+import {generatePoint} from './mock/point';
 
-const POINT_COUNT = 3;
+const POINT_COUNT = 7;
+
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -33,8 +35,9 @@ render(tripEventsElement, createSortTemplate(), 'beforeend');
 render(tripEventsElement, createEventsListTemplate(), 'beforeend');
 
 const tripEventsListElement = tripEventsElement.querySelector('.trip-events__list');
-render(tripEventsListElement, createEditPointTemplate(), 'beforeend');
+render(tripEventsListElement, createEditPointTemplate(generatePoint()), 'beforeend');
 for (let i = 0; i < POINT_COUNT; i++) {
-  render(tripEventsListElement, createEventTemplate(), 'beforeend');
+  const point = generatePoint();
+  render(tripEventsListElement, createEventTemplate(point), 'beforeend');
 }
 render(tripEventsListElement, createAddNewPointTemplate(), 'beforeend');
