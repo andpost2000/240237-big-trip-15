@@ -36,7 +36,7 @@ const tripControlsElement = document.querySelector('.trip-controls');
 render(tripControlsElement, createTripInfoTemplate(), 'beforeBegin');
 
 const tripInfoElement = document.querySelector('.trip-info');
-render(tripInfoElement, createTripInfoMainTemplate(), 'beforeend');
+render(tripInfoElement, createTripInfoMainTemplate(POINTS_DATA), 'beforeend');
 render(tripInfoElement, createTripInfoCostTemplate(POINTS_DATA), 'beforeend');
 
 const tripMainNavigationElement = tripControlsElement.querySelector('.trip-controls__navigation');

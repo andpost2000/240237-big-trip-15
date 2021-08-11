@@ -34,7 +34,7 @@ const getDescription = () => {
 };
 
 const generateTime = () => {
-  const maxDaysGap = 7;
+  const maxDaysGap = 20;
   const maxHourGap = 24;
   const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
   const hoursGap = getRandomInteger(-maxHourGap, maxHourGap);
