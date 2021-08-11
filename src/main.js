@@ -45,6 +45,8 @@ render(tripEventsElement, createSortTemplate(), 'beforeend');
 render(tripEventsElement, createEventsListTemplate(), 'beforeend');
 
 const tripEventsListElement = tripEventsElement.querySelector('.trip-events__list');
-render(tripEventsListElement, createEditPointTemplate(generatePoint()), 'beforeend');
-POINTS_DATA.forEach((point) => render(tripEventsListElement, createEventTemplate(point), 'beforeend'));
+render(tripEventsListElement, createEditPointTemplate(POINTS_DATA[0]), 'beforeend');
+for (let i = 1; i < POINTS_DATA.length; i++) {
+  render(tripEventsListElement, createEventTemplate(POINTS_DATA[i]), 'beforeend');
+}
 render(tripEventsListElement, createAddNewPointTemplate(), 'beforeend');
