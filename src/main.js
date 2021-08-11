@@ -22,7 +22,9 @@ const generatePoints = (count) => {
 
 generatePoints(POINT_COUNT);
 
-POINTS_DATA.sort((a, b) => a.time.start - b.time.start);
+if (POINTS_DATA.length) {
+  POINTS_DATA.sort((a, b) => a.time.start - b.time.start);
+}
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
