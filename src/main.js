@@ -9,9 +9,10 @@ import { createTripInfoTemplate } from './view/trip-info';
 import { createTripInfoMainTemplate } from './view/trip-info-main';
 import { createTripInfoCostTemplate } from './view/trip-info-cost';
 import { generatePoint } from './mock/point';
+import { eventsFilter } from './mock/filter';
 
 const POINT_COUNT = 15;
-const POINTS_DATA = [];
+let POINTS_DATA = [];
 
 const generatePoints = (count) => {
   for (let i = 0; i < count; i++) {
@@ -23,6 +24,7 @@ const generatePoints = (count) => {
 generatePoints(POINT_COUNT);
 
 if (POINTS_DATA.length) {
+  POINTS_DATA = eventsFilter(POINTS_DATA, 'future');
   POINTS_DATA.sort((a, b) => a.time.start - b.time.start);
 }
 
