@@ -10,26 +10,14 @@ const OFFERS = {
 };
 
 const getDescription = () => {
-  const DESCRIPTION = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'Cras aliquet varius magna, non porta ligula feugiat eget.',
-    'Fusce tristique felis at fermentum pharetra.',
-    'Aliquam id orci ut lectus varius viverra.',
-    'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
-    'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
-    'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
-    'Sed sed nisi sed augue convallis suscipit in sed felis.',
-    'Aliquam erat volutpat.',
-    'Nunc fermentum tortor ac porta dapibus.',
-    'In rutrum ac purus sit amet tempus.',
-  ];
+  const description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.';
+  const randomDescription = description.slice().split('.');
   let result = '';
-  DESCRIPTION.sort(() => Math.random() - 0.5).map((item, index) => {
-    if (index <= getRandomInteger(1, 5)) {
-      result = result.concat(' ').concat(item);
+  randomDescription.sort(() => Math.random() - 0.5).forEach((item, index) => {
+    if (index <= getRandomInteger(1, 5) && item !== '') {
+      result = result.concat(' ').concat(item).concat('.');
     }
   });
-
   return result.trim();
 };
 
@@ -49,10 +37,12 @@ const generateTime = () => {
   };
 };
 
-const getPictureUrl = (count) => {
-  const arr = new Array(count).fill();
+const createPictureUrls = () => {
   const res = [];
-  arr.forEach((_item, i) => res.push(i+1));
+  const count = getRandomInteger(1, 7);
+  for (let i = 0; i < count; i++) {
+    res.push(`http://picsum.photos/248/152?r=${i + 1}`);
+  }
   return res;
 };
 
@@ -67,6 +57,6 @@ export const generatePoint = () => {
     isFavorite: Boolean(getRandomInteger(0, 1)),
     offers: OFFERS[type],
     description: getDescription(),
-    pictures: getPictureUrl(getRandomInteger(1, 7)),
+    pictures: createPictureUrls(),
   };
 };

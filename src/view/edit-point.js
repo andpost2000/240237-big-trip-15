@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 const createPictureTemplate = (urls) => urls.map((url) => `
-  <img class="event__photo" src="http://picsum.photos/248/152?r=${url}" alt="Event photo">`)
+  <img class="event__photo" src="${url}" alt="Event photo">`)
   .join('');
 const createTypeItemTemplate = (type) => {
   const items = ['Taxi', 'Bus', 'Train', 'Ship', 'Transport', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
