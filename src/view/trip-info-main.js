@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
+import { createElement } from '../utils';
 
-export const createTripInfoMainTemplate = (data) => {
+const createTripInfoMainTemplate = (data) => {
   data.sort((a, b) => a.time.start - b.time.start);
   const startDate = data[0].time.start;
   const endDate = data[data.length-1].time.end;
@@ -11,3 +12,26 @@ export const createTripInfoMainTemplate = (data) => {
     <p class="trip-info__dates">${dayjs(startDate).format('MMM D')}&nbsp;&mdash;&nbsp;${dayjs(endDate).format(endDateFormat)}</p>
   </div>`;
 };
+
+export default class TripInfoMain {
+  constructor(data) {
+    this._element = null;
+    this._data = data;
+  }
+
+  getTemplate() {
+    return createTripInfoMainTemplate(this._data);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

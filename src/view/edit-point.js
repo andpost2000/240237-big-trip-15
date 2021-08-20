@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { createElement } from '../utils';
 
 const createPictureTemplate = (urls) => urls.map((url) => `
   <img class="event__photo" src="${url}" alt="Event photo">`)
@@ -17,7 +18,7 @@ const createTypeItemTemplate = (type) => {
   return res.join('');
 };
 
-export const createEditPointTemplate =  (point) => {
+const createEditPointTemplate =  (point) => {
   const {type, cost, time, description, pictures} = point;
   const timeStart = dayjs(time.start);
   const timeEnd = dayjs(time.end);
@@ -142,3 +143,26 @@ export const createEditPointTemplate =  (point) => {
     </form>
   </li>`;
 };
+
+export default class EditPoint {
+  constructor(point) {
+    this._element = null;
+    this._point = point;
+  }
+
+  getTemplate() {
+    return createEditPointTemplate(this._point);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
+import { createElement } from '../utils';
 
-export const createEventTemplate = (point) => {
+export const createPointTemplate = (point) => {
   const {type, cost, time, isFavorite} = point;
   const timeStart = dayjs(time.start);
   const timeEnd = dayjs(time.end);
@@ -43,3 +44,26 @@ export const createEventTemplate = (point) => {
     </div>
   </li>`;
 };
+
+export default class Point {
+  constructor(point) {
+    this._element = null;
+    this._point = point;
+  }
+
+  getTemplate() {
+    return createPointTemplate(this._point);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
