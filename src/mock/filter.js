@@ -1,4 +1,4 @@
-import {isEventExpired} from '../utils.js';
+import {isEventExpired} from '../utils/point';
 
 export const eventsFilter = (events, filter) => {
   switch (filter) {
