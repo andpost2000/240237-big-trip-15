@@ -1,7 +1,7 @@
 
 import { generatePoint } from './mock/point';
 import { eventsFilter } from './mock/filter';
-import { render, RenderPosition} from './utils.js';
+import { render, replace, RenderPosition} from './utils/render';
 import FiltersView from './view/filters';
 import TripInfoView from './view/trip-info';
 import TripInfoMainView from './view/trip-info-main';
@@ -37,11 +37,11 @@ const renderPoint = (eventListElement, point) => {
   const pointEditComponent = new EditPointView(point);
 
   const replacePointToForm = () => {
-    eventListElement.replaceChild(pointEditComponent.getElement(), pointComponent.getElement());
+    replace(pointEditComponent, pointComponent);
   };
 
   const replaceFormToPoint = () => {
-    eventListElement.replaceChild(pointComponent.getElement(), pointEditComponent.getElement());
+    replace(pointComponent, pointEditComponent);
   };
 
   const onEscKeyDown = (evt) => {
@@ -52,55 +52,54 @@ const renderPoint = (eventListElement, point) => {
     }
   };
 
-  pointComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', () => {
+  pointComponent.setCloseClickHandler(() => {
     replacePointToForm();
     document.addEventListener('keydown', onEscKeyDown);
   });
 
-  pointEditComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', () => {
+  pointEditComponent.setCloseClickHandler(() => {
     replaceFormToPoint();
     document.removeEventListener('keydown', onEscKeyDown);
   });
 
-  pointEditComponent.getElement().querySelector('.event__save-btn').addEventListener('click', (evt) => {
-    evt.preventDefault();
+  pointEditComponent.setFormSubmitHandler(() => {
     replaceFormToPoint();
     document.removeEventListener('keydown', onEscKeyDown);
   });
 
-  render(eventListElement, pointComponent.getElement(), RenderPosition.BEFOREEND);
+  render(eventListElement, pointComponent, RenderPosition.BEFOREEND);
 };
 
 const renderEventList = (eventsContainer, data) => {
   const eventsListElement = new EventListView();
-  render(eventsContainer, eventsListElement.getElement(), RenderPosition.BEFOREEND);
+  render(eventsContainer, eventsListElement, RenderPosition.BEFOREEND);
   if (data.length) {
     for (let i = 1; i < data.length; i++) {
-      renderPoint(eventsListElement.getElement(), data[i]);
+      renderPoint(eventsListElement, data[i]);
     }
-    render(eventsListElement.getElement(), new AddNewPoint().getElement(), RenderPosition.BEFOREEND);
+    render(eventsListElement, new AddNewPoint(), RenderPosition.BEFOREEND);
   } else {
     const msg = 'Click New Event to create your first point';
-    render(eventsListElement.getElement(), new EventsMessage(msg).getElement(), RenderPosition.BEFOREEND);
+    render(eventsListElement, new EventsMessage(msg), RenderPosition.BEFOREEND);
   }
 };
 
 const tripMainElement = document.querySelector('.trip-main');
-render(tripMainElement, new TripInfoView().getElement(), RenderPosition.AFTERBEGIN);
+render(tripMainElement, new TripInfoView(), RenderPosition.AFTERBEGIN);
 
 const tripInfoElement = document.querySelector('.trip-info');
 if (POINTS_DATA.length) {
-  render(tripInfoElement, new TripInfoMainView(POINTS_DATA).getElement(), RenderPosition.BEFOREEND);
+  render(tripInfoElement, new TripInfoMainView(POINTS_DATA), RenderPosition.BEFOREEND);
 }
-render(tripInfoElement, new TripInfoCostView(POINTS_DATA).getElement(), RenderPosition.BEFOREEND);
+render(tripInfoElement, new TripInfoCostView(POINTS_DATA), RenderPosition.BEFOREEND);
 
 const tripMainNavigationElement = tripMainElement.querySelector('.trip-controls__navigation');
-render(tripMainNavigationElement, new SiteMenuView().getElement(), RenderPosition.BEFOREEND);
+render(tripMainNavigationElement, new SiteMenuView(), RenderPosition.BEFOREEND);
 
 const tripFiltersElement = tripMainElement.querySelector('.trip-controls__filters');
-render(tripFiltersElement, new FiltersView().getElement(), RenderPosition.BEFOREEND);
+render(tripFiltersElement, new FiltersView(), RenderPosition.BEFOREEND);
 
 const tripEventsElement = document.querySelector('.trip-events');
-render(tripEventsElement, new SortView().getElement(), RenderPosition.BEFOREEND);
+render(tripEventsElement, new SortView(), RenderPosition.BEFOREEND);
 
 renderEventList(tripEventsElement, POINTS_DATA);
