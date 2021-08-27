@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import {nanoid} from 'nanoid';
 import { getRandomInteger } from '../utils/common';
 
 const POINT_TYPE = ['Taxi', 'Bus', 'Train', 'Ship', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
@@ -50,10 +51,10 @@ export const generatePoint = () => {
   const type = POINT_TYPE[getRandomInteger(0, POINT_TYPE.length - 1)];
 
   return {
+    id: nanoid(),
     type,
     time: generateTime(),
     cost: getRandomInteger(5, 1000),
-    isArchive: Boolean(getRandomInteger(0, 1)),
     isFavorite: Boolean(getRandomInteger(0, 1)),
     offers: OFFERS[type],
     description: getDescription(),

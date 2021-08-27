@@ -6,8 +6,12 @@ const createEventsMsgTemplate = (msg) => (
 
 
 export default class EventsMsg extends AbstractView {
-  constructor(msg) {
+  constructor() {
     super();
+    this._msg = '';
+  }
+
+  setMsg(msg) {
     this._msg = msg;
   }
 
