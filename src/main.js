@@ -24,7 +24,6 @@ generatePoints(POINT_COUNT);
 
 if (POINTS_DATA.length) {
   POINTS_DATA = eventsFilter(POINTS_DATA, 'future');
-  POINTS_DATA.sort((a, b) => a.time.start - b.time.start);
 }
 
 const tripMainElement = document.querySelector('.trip-main');
