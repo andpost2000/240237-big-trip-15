@@ -19,7 +19,7 @@ const createTypeItemTemplate = (type) => {
 };
 
 const createEditPointTemplate =  (point) => {
-  const {type, cost, time, description, pictures} = point;
+  const {type, price, time, description, pictures} = point;
   const timeStart = dayjs(time.start);
   const timeEnd = dayjs(time.end);
   const pictureTemplate = createPictureTemplate(pictures);
@@ -69,7 +69,7 @@ const createEditPointTemplate =  (point) => {
             <span class="visually-hidden">Price</span>
             &euro;
           </label>
-          <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${cost}">
+          <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${price}">
         </div>
 
         <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>

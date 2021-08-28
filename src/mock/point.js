@@ -30,7 +30,7 @@ const generateTime = () => {
   const startDay = dayjs().add(daysGap, 'day');
 
   const start = dayjs(startDay).add(hoursGap, 'hour');
-  const end = dayjs(start).add(30, 'minute').toDate();
+  const end = dayjs(start).add(getRandomInteger(10, 60), 'minute').toDate();
 
   return {
     start,
@@ -54,7 +54,7 @@ export const generatePoint = () => {
     id: nanoid(),
     type,
     time: generateTime(),
-    cost: getRandomInteger(5, 1000),
+    price: getRandomInteger(5, 1000),
     isFavorite: Boolean(getRandomInteger(0, 1)),
     offers: OFFERS[type],
     description: getDescription(),
