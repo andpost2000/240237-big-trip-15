@@ -2,15 +2,28 @@ import dayjs from 'dayjs';
 import {nanoid} from 'nanoid';
 import { getRandomInteger } from '../utils/common';
 
-const POINT_TYPE = ['Taxi', 'Bus', 'Train', 'Ship', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
-const OFFERS = {
-  'Taxi': ['VIP', 'Standart'],
-  'Bus': ['Choose seat', 'Luggage'],
-  'Train': ['Choose seat', 'Luggage'],
-  'Flight': ['Choose seat', 'Luggage', 'Comfort'],
+export const DESTINATIONS = ['Amsterdam', 'Chamonix', 'Geneva'];
+export const POINT_TYPE = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
+export const OFFERS = {
+  'taxi': ['VIP', 'Standart'],
+  'bus': ['Choose seat', 'Luggage'],
+  'train': ['Choose seat', 'Luggage'],
+  'flight': ['Choose seat', 'Luggage', 'Comfort'],
+};
+export const TYPE_NAMES = {
+  'sightseeing': 'Sightseeing',
+  'taxi': 'Taxi',
+  'flight': 'Flight',
+  'drive': 'Drive',
+  'check-in': 'Check-in',
+  'train': 'Train',
+  'ship': 'Ship',
+  'bus': 'Bus',
+  'restaurant': 'Restaurant',
+  'transport': 'Transport',
 };
 
-const getDescription = () => {
+export const getDescription = () => {
   const description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.';
   const randomDescription = description.slice().split('.');
   let result = '';
@@ -38,7 +51,27 @@ const generateTime = () => {
   };
 };
 
-const createPictureUrls = () => {
+export const generateOfferList = (type) => {
+  const offers = OFFERS[type];
+  if (!offers) {
+    return;
+  }
+
+  const list = [];
+
+  offers.forEach((offer) => {
+    list.push({
+      id: offer.toLowerCase().replace(' ', '-'),
+      title: offer,
+      price: getRandomInteger(5, 25) * 5,
+      isChecked: Math.random() > 0.5,
+    });
+  });
+
+  return list;
+};
+
+export const createPictureUrls = () => {
   const res = [];
   const count = getRandomInteger(1, 7);
   for (let i = 0; i < count; i++) {
@@ -52,11 +85,12 @@ export const generatePoint = () => {
 
   return {
     id: nanoid(),
+    destination: DESTINATIONS[getRandomInteger(0, DESTINATIONS.length - 1)],
     type,
     time: generateTime(),
     price: getRandomInteger(5, 1000),
     isFavorite: Boolean(getRandomInteger(0, 1)),
-    offers: OFFERS[type],
+    offers: generateOfferList(type),
     description: getDescription(),
     pictures: createPictureUrls(),
   };

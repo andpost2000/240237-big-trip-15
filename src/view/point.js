@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import AbstractView from './abstract.js';
 
 export const createPointTemplate = (point) => {
-  const {type, price, time, isFavorite} = point;
+  const {type, price, time, destination, isFavorite} = point;
   const timeStart = dayjs(time.start);
   const timeEnd = dayjs(time.end);
   const favoriteClass = isFavorite ? ' event__favorite-btn--active' : '';
@@ -10,9 +10,9 @@ export const createPointTemplate = (point) => {
     <div class="event">
       <time class="event__date" datetime="${timeStart.format('YYYY-mm-D')}">${timeStart.format('MMM DD')}</time>
       <div class="event__type">
-        <img class="event__type-icon" width="42" height="42" src="img/icons/${type.toLowerCase()}.png" alt="Event ${type} icon">
+        <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event ${type} icon">
       </div>
-      <h3 class="event__title">${type} Amsterdam</h3>
+      <h3 class="event__title">${type} ${destination}</h3>
       <div class="event__schedule">
         <p class="event__time">
           <time class="event__start-time" datetime="${timeStart.format('YYYY-mm-DDThh:mm')}">${timeStart.format('hh:mm')}</time>
