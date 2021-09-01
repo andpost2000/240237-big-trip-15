@@ -1,32 +1,27 @@
-name: NodeJS with Gulp
-
 on:
   push:
-    branches: [ master ]
+    branches: '*'
   pull_request:
-    branches: [ master ]
+    branches: '*'
 
+name: Npm Test
 jobs:
-  build:
+  check:
+    name: Check
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-    
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Set up Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '10'
 
-    - name: Build
+    - uses: actions/checkout@master
+      name: Checkout
+
+    - name: Install dependencies
       run: |
         npm install
-        gulp
-    - name: Test
+
+    - name: Run checks
       run: |
-        npm run test
-        gulp
+        npm test
