@@ -31,7 +31,7 @@ const createOffersListTemplate = (offers, isOffers) => {
   offers.forEach((offer) => {
     offersList.push(`
       <div class="event__offer-selector">
-        <input class="event__offer-checkbox  visually-hidden" id="event-offer-${offer.id}" type="checkbox" name="event-offer-${offer.id}" ${offer.isChecked ? 'checked' : ''}>
+        <input class="event__offer-checkbox  visually-hidden" data-id="${offer.id}" id="event-offer-${offer.id}" type="checkbox" name="event-offer-${offer.id}" ${offer.isChecked ? 'checked' : ''}>
         <label class="event__offer-label" for="event-offer-${offer.id}">
           <span class="event__offer-title">${offer.title}</span>
           &plus;&euro;&nbsp;
@@ -135,6 +135,7 @@ export default class EditPoint extends SmartView {
     this._formChangeHandler = this._formChangeHandler.bind(this);
     this._closeClickHandler = this._closeClickHandler.bind(this);
     this._changeTypeHandler = this._changeTypeHandler.bind(this);
+    this._changeOffersHandler = this._changeOffersHandler.bind(this);
     this._changeDestinationHandler = this._changeDestinationHandler.bind(this);
 
     this._innerHandlers = {
@@ -190,9 +191,21 @@ export default class EditPoint extends SmartView {
       needToRestoreHandlers = this._innerHandlers[name](evt);
     }
 
+    if (evt.target.className.includes('event__offer-checkbox')) {
+      this._changeOffersHandler(evt);
+      needToRestoreHandlers = true;
+    }
+
     if (needToRestoreHandlers) {
       this.restoreHandlers(true);
     }
+  }
+
+  _changeOffersHandler(evt) {
+    const isChecked = evt.target.checked;
+    const id = evt.target.dataset.id;
+
+    this._data.offers.find((item) => item.id === id).isChecked = isChecked;
   }
 
   _changeTypeHandler(evt) {
